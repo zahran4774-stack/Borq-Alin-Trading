@@ -1,36 +1,33 @@
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { updateSession } from "@/lib/supabase/middleware";
 
-const LOCALES = ["ar", "en"] as const;
-const DEFAULT_LOCALE = "ar";
+export async function updateSession(request: NextRequest) {
+  let response = NextResponse.next({ request });
 
-function getLocaleFromRequest(request: NextRequest): string {
-  const cookieLocale = request.cookies.get("locale")?.value;
-  if (cookieLocale && LOCALES.includes(cookieLocale as any)) return cookieLocale;
-
-  const acceptLang = request.headers.get("accept-language") || "";
-  if (acceptLang.toLowerCase().startsWith("en")) return "en";
-
-  return DEFAULT_LOCALE;
-}
-
-export async function middleware(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  const pathnameHasLocale = LOCALES.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll(
+          cookiesToSet: { name: string; value: string; options: CookieOptions }[]
+        ) {
+          cookiesToSet.forEach(({ name, value }) =>
+            request.cookies.set(name, value)
+          );
+          response = NextResponse.next({ request });
+          cookiesToSet.forEach(({ name, value, options }) =>
+            response.cookies.set(name, value, options)
+          );
+        },
+      },
+    }
   );
 
-  if (!pathnameHasLocale) {
-    const locale = getLocaleFromRequest(request);
-    const url = request.nextUrl.clone();
-    url.pathname = `/${locale}${pathname === "/" ? "" : pathname}`;
-    return NextResponse.redirect(url);
-  }
+  await supabase.auth.getUser();
 
-  return await updateSession(request);
+  return response;
 }
-
-export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|api).*)"],
-};
