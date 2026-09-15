@@ -1,0 +1,44 @@
+{
+  "common": {
+    "appName": "ليروق العين للتجارة",
+    "dashboard": "لوحة التحكم",
+    "accounts": "دليل الحسابات",
+    "contacts": "العملاء والموردون",
+    "invoices": "الفواتير",
+    "inventory": "المخزون",
+    "reports": "التقارير المالية",
+    "add": "إضافة",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "search": "بحث",
+    "code": "الرمز",
+    "name": "الاسم",
+    "type": "النوع",
+    "balance": "الرصيد",
+    "loading": "جارٍ التحميل...",
+    "noData": "لا توجد بيانات",
+    "language": "English",
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور"
+  },
+  "accountTypes": {
+    "asset": "أصول",
+    "liability": "التزامات",
+    "equity": "حقوق ملكية",
+    "revenue": "إيرادات",
+    "expense": "مصروفات"
+  },
+  "contactTypes": {
+    "customer": "عميل",
+    "supplier": "مورد",
+    "both": "عميل ومورد"
+  },
+  "dashboard": {
+    "totalReceivables": "إجمالي الذمم المدينة",
+    "totalPayables": "إجمالي الذمم الدائنة",
+    "cashAndBank": "النقدية والبنك",
+    "salesThisMonth": "مبيعات هذا الشهر"
+  }
+}
