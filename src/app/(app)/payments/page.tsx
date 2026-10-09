@@ -67,7 +67,7 @@ export default function Payments() {
           <div className="grid grid-cols-2 gap-3">
             <Field label="المبلغ"><input type="number" step="0.001" className="input num" value={f.amount} onChange={(e) => setF({ ...f, amount: Number(e.target.value) })} /></Field>
             <Field label="الطريقة"><select className="input" value={f.method} onChange={(e) => setF({ ...f, method: e.target.value })}>{Object.entries(METHODS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></Field>
-            <Field label="التاريخ"><input type="date" className="input" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} /></Field>
+            <Field label="التاريخ"><input type="date" lang="en-GB" dir="ltr" className="input" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} /></Field>
             <Field label="مرجع"><input className="input" value={f.reference} onChange={(e) => setF({ ...f, reference: e.target.value })} /></Field>
           </div>
           <p className="text-xs text-slate-500">حدّد فواتير لتخصيص الدفعة عليها، أو اتركها بدون تحديد ليتم توزيعها تلقائياً.</p>

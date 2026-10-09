@@ -34,7 +34,7 @@ export default function Expenses() {
         {canWrite && <button className="btn" onClick={() => { setErr(""); setM({ account: "", date: today(), amount: 0, vat: 0, method: "cash", payee: "", memo: "" }); }}><I n="plus" /> مصروف</button>}
       </PageHeader>
       {canWrite && !opBranch && <div className="mb-3"><NeedBranch /></div>}
-      <div className="card mb-3 flex gap-3 items-end"><Field label="من"><input type="date" className="input" value={from} onChange={(e) => setFrom(e.target.value)} /></Field><Field label="إلى"><input type="date" className="input" value={to} onChange={(e) => setTo(e.target.value)} /></Field><div className="mr-auto text-sm">الإجمالي: <b className="num">{money(total)}</b></div></div>
+      <div className="card mb-3 flex gap-3 items-end"><Field label="من"><input type="date" lang="en-GB" dir="ltr" className="input" value={from} onChange={(e) => setFrom(e.target.value)} /></Field><Field label="إلى"><input type="date" lang="en-GB" dir="ltr" className="input" value={to} onChange={(e) => setTo(e.target.value)} /></Field><div className="mr-auto text-sm">الإجمالي: <b className="num">{money(total)}</b></div></div>
       <div className="card overflow-x-auto">
         <table className="tbl"><thead><tr><th>الرقم</th><th>التاريخ</th><th>الحساب</th><th>المستفيد</th><th>البيان</th><th>الفرع</th><th>المبلغ</th><th>ضريبة</th><th></th></tr></thead>
           <tbody>{pg.rows.map((r) => (
@@ -56,7 +56,7 @@ export default function Expenses() {
             <div className="grid grid-cols-2 gap-3">
               <Field label="المبلغ (قبل الضريبة)"><input type="number" step="0.001" className="input num" value={m.amount} onChange={(e) => setM({ ...m, amount: e.target.value })} /></Field>
               <Field label="الضريبة"><input type="number" step="0.001" className="input num" value={m.vat} onChange={(e) => setM({ ...m, vat: e.target.value })} /></Field>
-              <Field label="التاريخ"><input type="date" className="input" value={m.date} onChange={(e) => setM({ ...m, date: e.target.value })} /></Field>
+              <Field label="التاريخ"><input type="date" lang="en-GB" dir="ltr" className="input" value={m.date} onChange={(e) => setM({ ...m, date: e.target.value })} /></Field>
               <Field label="الدفع"><select className="input" value={m.method} onChange={(e) => setM({ ...m, method: e.target.value })}>{Object.entries(METHODS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></Field>
             </div>
             <Field label="المستفيد"><input className="input" value={m.payee} onChange={(e) => setM({ ...m, payee: e.target.value })} /></Field>

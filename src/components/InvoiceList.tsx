@@ -72,8 +72,8 @@ export default function InvoiceList({ kind }: { kind: "sales" | "purchase" }) {
         {kind === "purchase" && can("admin", "accountant", "branch_manager") && <Link href="/purchases/new" className="btn"><I n="plus" /> فاتورة شراء</Link>}
       </PageHeader>
       <div className="card mb-3 flex flex-wrap gap-3 items-end no-print">
-        <div><label className="label">من</label><input type="date" className="input" value={from} onChange={(e) => setFrom(e.target.value)} /></div>
-        <div><label className="label">إلى</label><input type="date" className="input" value={to} onChange={(e) => setTo(e.target.value)} /></div>
+        <div><label className="label">من</label><input type="date" lang="en-GB" dir="ltr" className="input" value={from} onChange={(e) => setFrom(e.target.value)} /></div>
+        <div><label className="label">إلى</label><input type="date" lang="en-GB" dir="ltr" className="input" value={to} onChange={(e) => setTo(e.target.value)} /></div>
         <div><label className="label">الحالة</label>
           <select className="input" value={status} onChange={(e) => setStatus(e.target.value)}>
             <option value="">الكل</option>

@@ -54,8 +54,8 @@ export default function Reports() {
         {TABS.map(([k, v]) => <button key={k} className={`btn ${tab === k ? "" : "btn-sec"}`} onClick={() => setTab(k)}>{v}</button>)}
       </div>
       <div className="card mb-3 flex flex-wrap gap-3 items-end no-print">
-        {!["tb", "bs", "ar", "inv"].includes(tab) && <div><label className="label">من</label><input type="date" className="input" value={from} onChange={(e) => setFrom(e.target.value)} /></div>}
-        {!["ar", "inv"].includes(tab) && <div><label className="label">{["tb", "bs"].includes(tab) ? "حتى تاريخ" : "إلى"}</label><input type="date" className="input" value={to} onChange={(e) => setTo(e.target.value)} /></div>}
+        {!["tb", "bs", "ar", "inv"].includes(tab) && <div><label className="label">من</label><input type="date" lang="en-GB" dir="ltr" className="input" value={from} onChange={(e) => setFrom(e.target.value)} /></div>}
+        {!["ar", "inv"].includes(tab) && <div><label className="label">{["tb", "bs"].includes(tab) ? "حتى تاريخ" : "إلى"}</label><input type="date" lang="en-GB" dir="ltr" className="input" value={to} onChange={(e) => setTo(e.target.value)} /></div>}
         <div className="text-sm text-slate-500">الفرع: <b>{bname}</b> (غيّره من أعلى الصفحة)</div>
       </div>
       <Msg error={err} />

@@ -40,7 +40,7 @@ export default function Journal() {
       <PageHeader title="القيود اليومية">
         {can("admin", "accountant") && <button className="btn" onClick={() => { setErr(""); setM({ date: today(), memo: "", lines: [{ account_id: "", debit: 0, credit: 0 }, { account_id: "", debit: 0, credit: 0 }] }); }}><I n="plus" /> قيد يدوي</button>}
       </PageHeader>
-      <div className="card mb-3 flex gap-3 items-end"><div><label className="label">من</label><input type="date" className="input" value={from} onChange={(e) => setFrom(e.target.value)} /></div><div><label className="label">إلى</label><input type="date" className="input" value={to} onChange={(e) => setTo(e.target.value)} /></div></div>
+      <div className="card mb-3 flex gap-3 items-end"><div><label className="label">من</label><input type="date" lang="en-GB" dir="ltr" className="input" value={from} onChange={(e) => setFrom(e.target.value)} /></div><div><label className="label">إلى</label><input type="date" lang="en-GB" dir="ltr" className="input" value={to} onChange={(e) => setTo(e.target.value)} /></div></div>
       <div className="card overflow-x-auto">
         <table className="tbl"><thead><tr><th>التاريخ</th><th>المرجع</th><th>البيان</th><th>الفرع</th><th>المصدر</th><th></th></tr></thead>
           <tbody>{pg.rows.map((r) => (<>
@@ -54,7 +54,7 @@ export default function Journal() {
       {m && (!opBranch ? <Modal title="قيد يدوي" onClose={() => setM(null)}><NeedBranch /></Modal> :
         <Modal title="قيد يومية يدوي" onClose={() => setM(null)} wide>
           <div className="space-y-3"><Msg error={err} />
-            <div className="grid grid-cols-3 gap-3"><div><label className="label">التاريخ</label><input type="date" className="input" value={m.date} onChange={(e) => setM({ ...m, date: e.target.value })} /></div><div className="col-span-2"><label className="label">البيان</label><input className="input" value={m.memo} onChange={(e) => setM({ ...m, memo: e.target.value })} /></div></div>
+            <div className="grid grid-cols-3 gap-3"><div><label className="label">التاريخ</label><input type="date" lang="en-GB" dir="ltr" className="input" value={m.date} onChange={(e) => setM({ ...m, date: e.target.value })} /></div><div className="col-span-2"><label className="label">البيان</label><input className="input" value={m.memo} onChange={(e) => setM({ ...m, memo: e.target.value })} /></div></div>
             <table className="tbl"><thead><tr><th>الحساب</th><th>مدين</th><th>دائن</th><th>بيان</th></tr></thead>
               <tbody>{m.lines.map((l: any, i: number) => { const set = (p: any) => setM({ ...m, lines: m.lines.map((x: any, j: number) => (j === i ? { ...x, ...p } : x)) }); return (
                 <tr key={i}><td><select className="input" value={l.account_id} onChange={(e) => set({ account_id: e.target.value })}><option value="">—</option>{accts.map((a) => <option key={a.id} value={a.id}>{a.code} {a.name_ar}</option>)}</select></td>
