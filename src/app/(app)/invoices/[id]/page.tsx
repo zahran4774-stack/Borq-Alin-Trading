@@ -118,7 +118,7 @@ export default function InvoiceDetail() {
             <Msg error={err} />
             <Field label="الطريقة"><select className="input" value={pay.method} onChange={(e) => setPay({ ...pay, method: e.target.value })}>{Object.entries(METHODS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></Field>
             <Field label="المبلغ"><input type="number" step="0.001" className="input num" value={pay.amount} onChange={(e) => setPay({ ...pay, amount: Number(e.target.value) })} /></Field>
-            <Field label="التاريخ"><input type="date" lang="en-GB" dir="ltr" className="input" value={pay.date} onChange={(e) => setPay({ ...pay, date: e.target.value })} /></Field>
+            <Field label="التاريخ"><input type="date" className="input" value={pay.date} onChange={(e) => setPay({ ...pay, date: e.target.value })} /></Field>
             <Field label="مرجع"><input className="input" value={pay.reference} onChange={(e) => setPay({ ...pay, reference: e.target.value })} /></Field>
             <button className="btn w-full" onClick={doPay}><I n="save" /> حفظ</button>
           </div>

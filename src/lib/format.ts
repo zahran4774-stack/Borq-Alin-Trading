@@ -2,11 +2,11 @@ export const CURRENCY = "ر.ع";
 
 export function money(n: number | string | null | undefined): string {
   const v = Number(n ?? 0);
-  return v.toLocaleString("en-US", { minimumFractionDigits: 3, maximumFractionDigits: 3, useGrouping: false });
+  return v.toLocaleString("en-US", { minimumFractionDigits: 3, maximumFractionDigits: 3 });
 }
 export function num(n: number | string | null | undefined, d = 0): string {
   const v = Number(n ?? 0);
-  return v.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: d || 3, useGrouping: false });
+  return v.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: d || 3 });
 }
 export function today(): string {
   const d = new Date();

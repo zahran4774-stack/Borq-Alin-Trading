@@ -44,7 +44,7 @@ function Company() {
       <Field label="البريد"><input className="input num" value={f.email || ""} onChange={(e) => set("email", e.target.value)} /></Field>
       <Field label="العنوان" className="sm:col-span-2"><input className="input" value={f.address_ar || ""} onChange={(e) => set("address_ar", e.target.value)} /></Field>
       <Field label="نسبة الضريبة الافتراضية %"><input type="number" step="0.01" className="input num" value={f.default_vat_rate} onChange={(e) => set("default_vat_rate", e.target.value)} /></Field>
-      <Field label="إقفال الدفاتر حتى تاريخ (لا يُسمح بقيود قبله)"><input type="date" lang="en-GB" dir="ltr" className="input" value={f.books_locked_until || ""} onChange={(e) => set("books_locked_until", e.target.value)} /></Field>
+      <Field label="إقفال الدفاتر حتى تاريخ (لا يُسمح بقيود قبله)"><input type="date" className="input" value={f.books_locked_until || ""} onChange={(e) => set("books_locked_until", e.target.value)} /></Field>
       <Field label="تذييل الفاتورة" className="sm:col-span-2"><input className="input" value={f.invoice_footer_ar || ""} onChange={(e) => set("invoice_footer_ar", e.target.value)} placeholder="شكراً لتعاملكم معنا — البضاعة المباعة لا ترد ولا تستبدل بعد 7 أيام" /></Field>
       <Field label="شروط الصيانة (تظهر في إيصال الاستلام)" className="sm:col-span-2"><textarea className="input" rows={4} value={f.repair_terms_ar || ""} onChange={(e) => set("repair_terms_ar", e.target.value)} /></Field>
       <div className="sm:col-span-2"><button className="btn" onClick={save}><I n="save" /> حفظ</button></div>

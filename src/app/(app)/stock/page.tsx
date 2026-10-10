@@ -142,7 +142,7 @@ function Adjust({ products, canWrite }: { products: Product[]; canWrite: boolean
       {p?.track_serial ? <Field label="الأرقام التسلسلية"><textarea className="input num" rows={3} value={serials} onChange={(e) => setSerials(e.target.value)} /></Field>
         : <Field label="الكمية"><input type="number" min={0} step="any" className="input num" value={qty} onChange={(e) => setQty(Number(e.target.value))} /></Field>}
       {kind !== "loss" && <Field label="تكلفة الوحدة (قبل الضريبة)"><input type="number" step="0.001" className="input num" value={cost} onChange={(e) => setCost(Number(e.target.value))} /></Field>}
-      <Field label="التاريخ"><input type="date" lang="en-GB" dir="ltr" className="input" value={date} onChange={(e) => setDate(e.target.value)} /></Field>
+      <Field label="التاريخ"><input type="date" className="input" value={date} onChange={(e) => setDate(e.target.value)} /></Field>
       <Field label="ملاحظة"><input className="input" value={note} onChange={(e) => setNote(e.target.value)} /></Field>
       <button className="btn w-full" disabled={!allowed || !pid} onClick={go}><I n="save" /> حفظ</button>
       <p className="text-xs text-slate-500">الرصيد الافتتاحي يقيَّد مقابل حساب حقوق الملكية/الافتتاحي، وفروقات الجرد تُقيَّد في حساب فروقات المخزون.</p>

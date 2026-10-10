@@ -21,25 +21,12 @@ export default function Dashboard() {
       const { data } = await sb.rpc("report_branch_summary", { p_from: monthStart(), p_to: today() });
       setSum(((data as any[]) || []).filter((r) => !b || r.branch_id === b));
 
-      let iq = sb.from("invoices").select("kind,total,amount_paid,invoice_date,status").neq("status", "cancelled").limit(20000);
-      if (b) iq = iq.eq("branch_id", b);
-      const inv: any[] = ((await iq).data as any[]) || [];
-      const t = today();
-      const ts = inv.filter((i) => i.kind === "sales" && i.invoice_date === t);
-      let rq = sb.from("repair_orders").select("status").not("status", "in", "(delivered,cancelled)").limit(5000);
-      if (b) rq = rq.eq("branch_id", b);
-      const rep: any[] = ((await rq).data as any[]) || [];
-      let sq = sb.from("branch_stock").select("product_id,quantity,products(reorder_level,is_active)").limit(20000);
-      if (b) sq = sq.eq("branch_id", b);
-      const stk: any[] = ((await sq).data as any[]) || [];
-      const agg: Record<string, { q: number; r: number }> = {};
-      stk.forEach((s) => { if (!s.products?.is_active) return; const a = (agg[s.product_id] ||= { q: 0, r: Number(s.products?.reorder_level || 0) }); a.q += Number(s.quantity); });
+      const { data: st } = await sb.rpc("dashboard_stats", { p_branch: b, p_today: today() });
+      const x: any = st || {};
       setD({
-        todaySales: ts.reduce((s, i) => s + Number(i.total), 0), todayCount: ts.length,
-        repairs: rep.length, ready: rep.filter((r) => r.status === "ready").length,
-        low: Object.values(agg).filter((a) => a.r > 0 && a.q <= a.r).length,
-        recv: inv.filter((i) => i.kind === "sales").reduce((s, i) => s + Number(i.total) - Number(i.amount_paid), 0),
-        pay: inv.filter((i) => i.kind === "purchase").reduce((s, i) => s + Number(i.total) - Number(i.amount_paid), 0),
+        todaySales: Number(x.today_sales || 0), todayCount: Number(x.today_count || 0),
+        repairs: Number(x.repairs || 0), ready: Number(x.ready || 0), low: Number(x.low || 0),
+        recv: Number(x.recv || 0), pay: Number(x.pay || 0),
       });
       let lq = sb.from("invoices").select("id,invoice_number,total,invoice_date,contacts(name_ar)").eq("kind", "sales").neq("status", "cancelled").order("created_at", { ascending: false }).limit(8);
       if (b) lq = lq.eq("branch_id", b);

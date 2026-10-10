@@ -123,7 +123,7 @@ export default function RepairDetail() {
               <Field label="الحالة"><select className="input" disabled={closed} value={f.status} onChange={(e) => setF({ ...f, status: e.target.value })}>
                 {(closed ? Object.keys(REPAIR_STATUS) : EDITABLE).map((k) => <option key={k} value={k}>{REPAIR_STATUS[k]}</option>)}</select></Field>
               <Field label="الفني"><select className="input" disabled={closed} value={f.technician_id} onChange={(e) => setF({ ...f, technician_id: e.target.value })}><option value="">—</option>{techs.map((t) => <option key={t.id} value={t.id}>{t.full_name}</option>)}</select></Field>
-              <Field label="موعد التسليم"><input type="date" lang="en-GB" dir="ltr" disabled={closed} className="input" value={f.promised_at} onChange={(e) => setF({ ...f, promised_at: e.target.value })} /></Field>
+              <Field label="موعد التسليم"><input type="date" disabled={closed} className="input" value={f.promised_at} onChange={(e) => setF({ ...f, promised_at: e.target.value })} /></Field>
               <Field label="التقدير الأولي"><input type="number" step="0.001" disabled={closed} className="input num" value={f.estimated_cost} onChange={(e) => setF({ ...f, estimated_cost: e.target.value })} /></Field>
               <Field label="أجرة العمل (قبل الضريبة)"><input type="number" step="0.001" disabled={closed} className="input num" value={f.labor_charge} onChange={(e) => setF({ ...f, labor_charge: e.target.value })} /></Field>
               <Field label="ضمان الصيانة (أيام)"><input type="number" disabled={closed} className="input num" value={f.warranty_days} onChange={(e) => setF({ ...f, warranty_days: e.target.value })} /></Field>

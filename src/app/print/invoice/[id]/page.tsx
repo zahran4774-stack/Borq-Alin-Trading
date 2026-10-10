@@ -38,7 +38,7 @@ function Inner() {
   if (!d) return <div className="p-6 text-slate-500">…</div>;
   const { inv, lines, pays, co } = d;
   const sales = inv.kind === "sales";
-  const title = inv.status === "cancelled" ? "فاتورة ملغاة" : sales ? "فاتورة ضريبية" : "فاتورة شراء";
+  const title = inv.status === "cancelled" ? "فاتورة ملغاة" : "";
   const rem = Number(inv.total) - Number(inv.amount_paid);
   const vatTotal = Number(inv.tax_amount);
 
@@ -61,9 +61,9 @@ function Inner() {
             <div className="font-bold text-sm">{co?.name_ar}</div>
             <div>{inv.branches?.name_ar}</div>
             {inv.branches?.address_ar && <div>{inv.branches.address_ar}</div>}
-            {(inv.branches?.phone || co?.phone) && <div className="num">{inv.branches?.phone || co?.phone}</div>}
+            {(inv.branches?.phone || co?.phone) && <div>الهاتف: <span className="num">{inv.branches?.phone || co?.phone}</span></div>}
             {co?.tax_number && <div>الرقم الضريبي: <span className="num">{co.tax_number}</span></div>}
-            <div className="font-bold mt-1">{title}</div>
+            {title && <div className="font-bold mt-1">{title}</div>}
           </div>
           <hr className="my-1 border-dashed border-black" />
           <div className="flex justify-between"><span>رقم:</span><span className="num">{inv.invoice_number}</span></div>
@@ -93,18 +93,18 @@ function Inner() {
   return (
     <div className="bg-slate-200 min-h-screen">
       {toolbar}
-      <div className="sheet-a4 print-area shadow my-3 text-[13px]">
+      <div className="sheet-a4 print-area shadow my-3 text-[13px] flex flex-col">
         <div className="flex justify-between items-start border-b-2 border-brand-700 pb-3">
           <div>
             <div className="text-2xl font-bold text-brand-700">{co?.name_ar}</div>
             {co?.name_en && <div className="text-slate-500">{co.name_en}</div>}
             <div className="mt-1">{inv.branches?.name_ar}{inv.branches?.address_ar ? ` — ${inv.branches.address_ar}` : ""}</div>
-            <div className="num">{inv.branches?.phone || co?.phone}</div>
+            {(inv.branches?.phone || co?.phone) && <div>الهاتف: <span className="num">{inv.branches?.phone || co?.phone}</span></div>}
             {co?.tax_number && <div>الرقم الضريبي: <span className="num">{co.tax_number}</span></div>}
             {co?.cr_number && <div>السجل التجاري: <span className="num">{co.cr_number}</span></div>}
           </div>
           <div className="text-end">
-            <div className="text-xl font-bold">{title}</div>
+            {title && <div className="text-xl font-bold text-red-700">{title}</div>}
             <div>رقم: <span className="num font-bold">{inv.invoice_number}</span></div>
             <div>التاريخ: <span className="num">{fdate(inv.invoice_date)}</span></div>
             {inv.supplier_invoice_no && <div>فاتورة المورد: <span className="num">{inv.supplier_invoice_no}</span></div>}
@@ -115,6 +115,7 @@ function Inner() {
           {inv.contacts?.phone && <span className="mr-4 num">{inv.contacts.phone}</span>}
           {inv.contacts?.tax_number && <span className="mr-4">الرقم الضريبي: <span className="num">{inv.contacts.tax_number}</span></span>}
         </div>
+        <div className="flex-1">
         <table className="w-full border-collapse">
           <thead>
             <tr className="bg-brand-700 text-white">
@@ -133,7 +134,8 @@ function Inner() {
             ))}
           </tbody>
         </table>
-        <div className="flex justify-between mt-4">
+        </div>
+        <div className="flex justify-between mt-4 border-t pt-3">
           <div className="text-xs text-slate-600 max-w-sm">
             {inv.notes && <div className="mb-2"><b>ملاحظات:</b> {inv.notes}</div>}
             {pays.length > 0 && <div><b>الدفع:</b> {pays.map((p: any) => `${METHODS[p.payments?.method]} ${money(p.amount)}`).join(" ، ")}</div>}

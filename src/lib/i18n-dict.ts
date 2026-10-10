@@ -216,7 +216,7 @@ export const PAIRS: [string, string][] = [
   ["لا يوجد", "None"], ["بند المصروف", "Expense item"], ["قيد يومية يدوي", "Manual journal entry"], ["السيريال", "Serial"],
   ["إقفال المصروفات الشهرية", "Monthly expenses closing"], ["هذه المصروفات إلزامية، ولا يمكن متابعة العمل قبل إدخالها. الحقول المعلّمة بـ * مطلوبة.", "These expenses are mandatory; you cannot continue until they are entered. Fields marked * are required."],
   ["إيجار المحل", "Shop rent"], ["فاتورة الكهرباء", "Electricity bill"], ["فاتورة الإنترنت", "Internet bill"], ["رواتب الموظفين", "Employee salaries"],
-  ["اختياري", "Optional"], ["الضريبة (اختياري)", "VAT (optional)"], ["المستفيد", "Payee"], ["المؤجّر", "Landlord"], ["اسم الموظف", "Employee name"], ["موظف آخر", "Add employee"],
+  ["اختياري", "Optional"], ["المستفيد", "Payee"], ["المؤجّر", "Landlord"], ["اسم الموظف", "Employee name"], ["موظف آخر", "Add employee"],
   ["راتب موظف", "Employee salary"], ["حفظ وإقفال الشهر", "Save and close the month"], ["متبقي", "Remaining"], ["طريقة الدفع", "Payment method"], ["حذف", "Delete"],
   ["المنتج غير متوفر — أدخل المشتريات أولاً", "Product out of stock — enter the purchase first"], ["إدخال مشتريات", "Enter purchase"],
   ["صلاحيتك لا تسمح بتسجيل المشتريات. اطلب من مدير الفرع أو المحاسب إدخال مشتريات هذا المنتج، ثم أعد المحاولة.", "You are not allowed to record purchases. Ask the branch manager or accountant to enter this product's purchase, then try again."],
@@ -237,4 +237,8 @@ export const PAIRS: [string, string][] = [
   ["السابق", "Previous"],
   ["التالي", "Next"],
   ["صفحة", "Page"],
+  ["الهاتف:", "Phone:"],
+  ["لا يوجد اتصال بالإنترنت — يمكنك تصفّح الصفحات المحمّلة سابقاً، لكن لا يمكن حفظ فواتير أو سندات حتى يعود الاتصال", "No internet connection — you can browse pages loaded earlier, but invoices and vouchers can't be saved until the connection returns"],
+  ["ثبّت البرنامج على جهازك لفتحه كتطبيق", "Install the app on your device to open it like a native app"],
+  ["تثبيت", "Install"],
 ];

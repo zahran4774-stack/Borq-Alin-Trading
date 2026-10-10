@@ -62,7 +62,7 @@ export default function MonthlyGate() {
   const line = (label: string, v: Row, set: (r: Row) => void, opt?: boolean, namePh?: string) => (
     <div className="grid grid-cols-12 gap-2 items-end">
       <div className="col-span-12 sm:col-span-4"><label className="label">{label}{opt ? "" : " *"}</label>
-        <input className="input num" type="number" min="0" step="0.001" inputMode="decimal" placeholder={opt ? "اختياري" : "0"} value={v.amount} onChange={(e) => set({ ...v, amount: e.target.value })} /></div>
+        <input className="input num" type="number" min="0" step="0.001" inputMode="decimal" placeholder={opt ? "اختياري" : "0.000"} value={v.amount} onChange={(e) => set({ ...v, amount: e.target.value })} /></div>
       <div className="col-span-6 sm:col-span-4"><label className="label">طريقة الدفع</label>
         <select className="input" value={v.method} onChange={(e) => set({ ...v, method: e.target.value })}>{Object.entries(METHODS).map(([k, t]) => <option key={k} value={k}>{t}</option>)}</select></div>
       <div className="col-span-6 sm:col-span-4"><label className="label">{namePh || "المستفيد"}</label>

@@ -42,7 +42,7 @@ export default function NewRepair() {
         <Field label="الملحقات المستلمة"><input className="input" value={f.accessories} onChange={(e) => set("accessories", e.target.value)} placeholder="شاحن، جراب، شريحة…" /></Field>
         <Field label="حالة الجهاز عند الاستلام" className="sm:col-span-2"><input className="input" value={f.condition} onChange={(e) => set("condition", e.target.value)} placeholder="خدوش، شاشة مكسورة…" /></Field>
         <Field label="التكلفة التقديرية"><input type="number" step="0.001" className="input num" value={f.estimated} onChange={(e) => set("estimated", e.target.value)} /></Field>
-        <Field label="موعد التسليم المتوقع"><input type="date" lang="en-GB" dir="ltr" className="input" value={f.promised} onChange={(e) => set("promised", e.target.value)} /></Field>
+        <Field label="موعد التسليم المتوقع"><input type="date" className="input" value={f.promised} onChange={(e) => set("promised", e.target.value)} /></Field>
         <div className="grid grid-cols-2 gap-2">
           <Field label="عربون"><input type="number" step="0.001" className="input num" value={f.deposit} onChange={(e) => set("deposit", e.target.value)} /></Field>
           <Field label="طريقة الدفع"><select className="input" value={f.method} onChange={(e) => set("method", e.target.value)}>{Object.entries(METHODS).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></Field>

@@ -70,8 +70,8 @@ export default function NewPurchase() {
           <div><label className="label">المورد *</label>
             <select className="input" value={supplier} onChange={(e) => setSupplier(e.target.value)}><option value="">—</option>{suppliers.map((s) => <option key={s.id} value={s.id}>{s.name_ar}</option>)}</select></div>
           <div><label className="label">رقم فاتورة المورد</label><input className="input num" value={invNo} onChange={(e) => setInvNo(e.target.value)} /></div>
-          <div><label className="label">التاريخ</label><input type="date" lang="en-GB" dir="ltr" className="input" value={date} onChange={(e) => setDate(e.target.value)} /></div>
-          <div><label className="label">تاريخ الاستحقاق</label><input type="date" lang="en-GB" dir="ltr" className="input" value={due} onChange={(e) => setDue(e.target.value)} /></div>
+          <div><label className="label">التاريخ</label><input type="date" className="input" value={date} onChange={(e) => setDate(e.target.value)} /></div>
+          <div><label className="label">تاريخ الاستحقاق</label><input type="date" className="input" value={due} onChange={(e) => setDue(e.target.value)} /></div>
         </div>
         {!suppliers.length && <p className="text-sm text-amber-600">لا يوجد موردون. أضف مورداً من صفحة «العملاء والموردون».</p>}
         <table className="tbl">

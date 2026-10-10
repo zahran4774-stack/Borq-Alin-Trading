@@ -42,6 +42,4 @@ html[data-lang="en"]:not([data-ready]) body { visibility: hidden; }
 .sheet-a4 { width: 210mm; min-height: 297mm; padding: 12mm; margin: 0 auto; background: #fff; }
 .sheet-80 { width: 80mm; padding: 3mm; margin: 0 auto; background: #fff; font-size: 12px; }
 @page { margin: 6mm; }
-
-/* Date inputs: keep dd/mm/yyyy readable inside RTL pages */
-input[type="date"] { direction: ltr; text-align: right; min-height: 2.5rem; }
+@media print { .sheet-a4 { min-height: 275mm; margin: 0 auto; box-shadow: none; } }

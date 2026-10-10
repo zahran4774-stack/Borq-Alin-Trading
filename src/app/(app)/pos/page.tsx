@@ -209,7 +209,7 @@ export default function POS() {
   return (
     <div>
       <PageHeader title="نقطة البيع">
-        <input type="date" lang="en-GB" dir="ltr" className="input !w-auto" value={date} onChange={(e) => setDate(e.target.value)} />
+        <input type="date" className="input !w-auto" value={date} onChange={(e) => setDate(e.target.value)} />
       </PageHeader>
       <Msg error={err} />
       <div className="grid lg:grid-cols-5 gap-4">
