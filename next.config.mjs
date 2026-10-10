@@ -26,7 +26,12 @@ const securityHeaders = [
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
-  async headers() { return [{ source: "/(.*)", headers: securityHeaders }]; },
+  async headers() {
+    return [
+      { source: "/(.*)", headers: securityHeaders },
+      { source: "/sw.js", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }, { key: "Service-Worker-Allowed", value: "/" }] },
+    ];
+  },
   env: {
     NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL || "https://byhkwkltpyugrnitfmep.supabase.co",
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "sb_publishable_YKNR6zq1LfuS1JFXl1xs5w_gsk71cYh",
