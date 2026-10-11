@@ -6,8 +6,9 @@ import { useApp } from "@/lib/app-context";
 import { errMsg, METHODS, money, r3, today } from "@/lib/format";
 import type { Contact, Product } from "@/lib/types";
 import { Msg, NeedBranch, PageHeader } from "@/components/ui";
+import ProductPicker from "@/components/ProductPicker";
 
-type L = { key: string; product_id: string; qty: number; cost: number; rate: number; serialsText: string };
+type L = { key: string; product_id: string; qty: number; cost: number; sale: number; rate: number; serialsText: string };
 
 export default function NewPurchase() {
   const { sb, opBranch, company } = useApp();
@@ -55,8 +56,14 @@ export default function NewPurchase() {
       p_lines: lines.map((l) => ({ product_id: l.product_id, quantity: l.qty, unit_price: l.cost, tax_rate: l.rate, serials: prod(l.product_id)?.track_serial ? serialsOf(l) : undefined })),
       p_payments: pays.filter((p) => p.amount > 0), p_notes: notes || null,
     });
+    if (error) { setBusy(false); setErr(errMsg(error)); return; }
+    // تحديث سعر البيع للمنتجات التي تغيّر سعرها (بعد نجاح حفظ الفاتورة)
+    const upd = new Map<string, number>();
+    lines.forEach((l) => { if (l.sale > 0 && Number(prod(l.product_id)?.sale_price || 0) !== l.sale) upd.set(l.product_id, l.sale); });
+    let failed = false;
+    for (const [id, price] of upd) { const r = await sb.from("products").update({ sale_price: price }).eq("id", id); if (r.error) failed = true; }
     setBusy(false);
-    if (error) { setErr(errMsg(error)); return; }
+    if (failed) { setErr("تم حفظ الفاتورة، لكن تعذّر تحديث سعر البيع لبعض المنتجات — عدّله من صفحة المنتجات."); setTimeout(() => router.push(`/invoices/${data}`), 2500); return; }
     router.push(`/invoices/${data}`);
   }
 
@@ -75,7 +82,7 @@ export default function NewPurchase() {
         </div>
         {!suppliers.length && <p className="text-sm text-amber-600">لا يوجد موردون. أضف مورداً من صفحة «العملاء والموردون».</p>}
         <table className="tbl">
-          <thead><tr><th>المنتج</th><th>الكمية</th><th>سعر الوحدة (قبل الضريبة)</th><th>ضريبة %</th><th>الإجمالي</th><th></th></tr></thead>
+          <thead><tr><th>المنتج</th><th>الكمية</th><th>سعر الشراء (قبل الضريبة)</th><th>سعر البيع</th><th>ضريبة %</th><th>الإجمالي</th><th></th></tr></thead>
           <tbody>
             {lines.map((l) => {
               const p = prod(l.product_id);
@@ -83,14 +90,16 @@ export default function NewPurchase() {
               return (
                 <tr key={l.key}>
                   <td className="min-w-[220px]">
-                    <select className="input" value={l.product_id} onChange={(e) => { const np = prod(e.target.value); set({ product_id: e.target.value, cost: Number(np?.cost_price || 0), rate: Number(np?.tax_rate ?? company.default_vat_rate) }); }}>
-                      <option value="">— اختر —</option>{products.map((x) => <option key={x.id} value={x.id}>{x.name_ar}</option>)}
-                    </select>
+                    <ProductPicker products={products} value={l.product_id}
+                      onCreated={(np) => setProducts((ps) => [...ps, np].sort((a, b) => a.name_ar.localeCompare(b.name_ar, "ar")))}
+                      onPick={(np) => set({ product_id: np.id, cost: Number(np.cost_price || 0), sale: Number(np.sale_price || 0), rate: Number(np.tax_rate ?? company.default_vat_rate) })} />
                     {p?.track_serial && <textarea className="input mt-1 num text-xs" rows={2} placeholder={`أدخل ${l.qty} رقم IMEI (مفصولة بسطر أو فاصلة)`} value={l.serialsText} onChange={(e) => set({ serialsText: e.target.value })} />}
                     {p?.track_serial && <div className="text-xs text-slate-500">المدخل: {serialsOf(l).length} / {l.qty}</div>}
                   </td>
                   <td className="w-24"><input type="number" min={1} step="any" className="input num" value={l.qty} onChange={(e) => set({ qty: Number(e.target.value) })} /></td>
                   <td className="w-36"><input type="number" min={0} step="0.001" className="input num" value={l.cost} onChange={(e) => set({ cost: Number(e.target.value) })} /></td>
+                  <td className="w-32"><input type="number" min={0} step="0.001" className="input num" value={l.sale} onChange={(e) => set({ sale: Number(e.target.value) })} />
+                    {l.product_id && l.sale > 0 && l.cost > 0 && <div className="text-xs text-slate-500 num">هامش {(((l.sale - l.cost) / l.cost) * 100).toFixed(0)}%</div>}</td>
                   <td className="w-24"><input type="number" step="0.01" className="input num" value={l.rate} onChange={(e) => set({ rate: Number(e.target.value) })} /></td>
                   <td className="num w-28">{money(r3(l.qty * l.cost) + r3((r3(l.qty * l.cost) * l.rate) / 100))}</td>
                   <td><button className="text-red-500 text-lg" onClick={() => setLines(lines.filter((x) => x.key !== l.key))}>×</button></td>
@@ -99,7 +108,7 @@ export default function NewPurchase() {
             })}
           </tbody>
         </table>
-        <button className="btn btn-sec btn-sm" onClick={() => setLines([...lines, { key: crypto.randomUUID(), product_id: "", qty: 1, cost: 0, rate: Number(company.default_vat_rate), serialsText: "" }])}><I n="plus" /> بند</button>
+        <button className="btn btn-sec btn-sm" onClick={() => setLines([...lines, { key: crypto.randomUUID(), product_id: "", qty: 1, cost: 0, rate: Number(company.default_vat_rate), serialsText: "", sale: 0 }])}><I n="plus" /> بند</button>
         <div className="grid sm:grid-cols-2 gap-4 border-t pt-3">
           <div className="space-y-2">
             <div className="text-sm font-semibold">دفعات للمورد (اتركها فارغة للشراء الآجل)</div>
