@@ -94,20 +94,20 @@ function Inner() {
     <div className="bg-slate-200 min-h-screen">
       {toolbar}
       <div className="sheet-a4 print-area shadow my-3 text-[13px] flex flex-col">
-        <div className="flex justify-between items-start border-b-2 border-brand-700 pb-3">
-          <div>
-            <div className="text-2xl font-bold text-brand-700">{co?.name_ar}</div>
+        <div className="flex justify-between items-start gap-6 border-b-2 border-brand-700 pb-3">
+          <div className="flex-1 min-w-0">
+            <div className="text-2xl leading-snug font-bold text-brand-700">{co?.name_ar}</div>
             {co?.name_en && <div className="text-slate-500">{co.name_en}</div>}
             <div className="mt-1">{inv.branches?.name_ar}{inv.branches?.address_ar ? ` — ${inv.branches.address_ar}` : ""}</div>
             {(inv.branches?.phone || co?.phone) && <div>الهاتف: <span className="num">{inv.branches?.phone || co?.phone}</span></div>}
             {co?.tax_number && <div>الرقم الضريبي: <span className="num">{co.tax_number}</span></div>}
             {co?.cr_number && <div>السجل التجاري: <span className="num">{co.cr_number}</span></div>}
           </div>
-          <div className="text-end">
+          <div className="shrink-0 whitespace-nowrap border border-slate-300 rounded px-4 py-2 space-y-1 min-w-[190px]">
             {title && <div className="text-xl font-bold text-red-700">{title}</div>}
-            <div>رقم: <span className="num font-bold">{inv.invoice_number}</span></div>
-            <div>التاريخ: <span className="num">{fdate(inv.invoice_date)}</span></div>
-            {inv.supplier_invoice_no && <div>فاتورة المورد: <span className="num">{inv.supplier_invoice_no}</span></div>}
+            <div className="flex justify-between gap-4"><span className="text-slate-500">رقم:</span><span className="num font-bold">{inv.invoice_number}</span></div>
+            <div className="flex justify-between gap-4"><span className="text-slate-500">التاريخ:</span><span className="num">{fdate(inv.invoice_date)}</span></div>
+            {inv.supplier_invoice_no && <div className="flex justify-between gap-4"><span className="text-slate-500">فاتورة المورد:</span><span className="num">{inv.supplier_invoice_no}</span></div>}
           </div>
         </div>
         <div className="my-3 p-2 bg-slate-50 rounded">
